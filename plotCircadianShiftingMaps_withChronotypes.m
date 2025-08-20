@@ -99,7 +99,7 @@ for j = 1:length(Condition_Names)
         hold off;
 
         %% Save map
-        saveas(F3,sprintf('CircadianShiftingMap_%s.png',Condition_Names{j}))
+        saveas(F3,sprintf('outputs/CircadianShiftingMap_%s.png',Condition_Names{j}))
         close(F3);
         clear F3
 end
