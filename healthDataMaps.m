@@ -3,10 +3,10 @@
 % 9 Mar 2025
 
 %% Load Data
-load('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/Health Data/estimatedHOData_0.10PercentLux_Capped10K_ODE15_20250307.mat')
+load('outputs/estimatedHOData_0.10PercentLux_Capped10K_ODE15_20250307.mat')
 
 % County Shapes 2023 - USDOTBLS
-countyfilePath = '/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/cb_2023_us_all_500k/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
+countyfilePath = 'inputs/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
 countyData = shaperead(countyfilePath);
 
 Condition_Names = T.Properties.VariableNames(contains(T.Properties.VariableNames,'TST'));
