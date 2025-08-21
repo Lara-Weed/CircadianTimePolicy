@@ -9,9 +9,10 @@ function [B_hat,alpha,n_dot,n] = processL_stHilaire2007(I,t,slope_sens_optional)
 %               n_dot - Change in 
 
 % Created by Lara Weed 29 June 2021
-% Adapted from 
+% Adapted from St. Hilaire et al., 2007 
 % ------------------------------------------------------------------------%
     I(isnan(I)) = 0;
+    I(I>10000) = 10000; % Cap at 10k lux due to model limitations
     
     % Constants
     beta = 0.007; %min-1
