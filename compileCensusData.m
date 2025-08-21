@@ -5,17 +5,17 @@
 
 %% Load Data
 % State Abbreviations
-BLS = readtable('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/BLS/StateAbbreviations_BLS.xlsx');
+BLS = readtable('inputs/StateAbbreviations_BLS.xlsx');
 
 % County Shapes 2023 - USDOTBLS
-countyfilePath = '/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/cb_2023_us_all_500k/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
+countyfilePath = 'inputs/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
 countyData = shaperead(countyfilePath);
 
 % County Population 2023
-countyPop = readtable('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/2023 County Pop/co-est2023-alldata.csv');
+countyPop = readtable('inputs/co-est2023-alldata.csv');
 
 % Timezones - USDOTBLS
-shapefilePath = '/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/DOT/NTAD_Time_Zones_467650596632424595/Time_Zones.shp';
+shapefilePath = 'inputs/NTAD_Time_Zones_467650596632424595/Time_Zones.shp';
 timeZoneData = shaperead(shapefilePath);
 %% Extract County Info
 % Initialize arrays to store results

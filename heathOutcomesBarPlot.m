@@ -3,7 +3,7 @@
 % 9 MAr 2025
 
 %% Load Data
-load('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/Health Data/estimatedHOData_Bandwidth0.05_0.10PercentLux_Capped10K_ODE15_20250307.mat')
+load('outputs/estimatedHOData_0.10PercentLux_Capped10K_ODE15_20250307.mat')
 
 %% Set plot Colors
 low_color = [1, 1, 0.8];   % Light yellow
