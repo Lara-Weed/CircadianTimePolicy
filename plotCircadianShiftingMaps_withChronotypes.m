@@ -4,17 +4,17 @@
 
 %% Load Data
 % County Data
-load('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/countyData_2023_Complied.mat');
+load('outputs/countyData_2023_Complied.mat');
 
 % County Shapes 2023 - USDOTBLS
-countyfilePath = '/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/CensusData/cb_2023_us_all_500k/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
+countyfilePath = 'inputs/cb_2023_us_county_500k/cb_2023_us_county_500k.shp';
 countyData = shaperead(countyfilePath);
 
 countyT = rmmissing(countyT);
 countyT = countyT(~strcmp(countyT.stateNames,'Hawaii') & ~strcmp(countyT.stateNames,'Alaska'),:);
 
 % Shift Data
-load('/Users/lara/Library/CloudStorage/OneDrive-Stanford/Research/Projects/TimeZones/Health Data/DifferenceTables/pairedData_0.10PercentLux_Capped10K_ODE15_20250307.mat')
+load('outputs/pairedData_0.10PercentLux_Capped10K_ODE15_20250307.mat')
 
 %% Loop through time policies and chronotypes
 
