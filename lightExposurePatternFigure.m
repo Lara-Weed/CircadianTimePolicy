@@ -41,15 +41,15 @@ for pt = 1:size(testPoints,1)
     eastWest_hours = testPoints(pt,3)./-15;
 
     % Compute lux
-    luxValues = luxReduction*computeLux(t+hours(eastWest_hours), latitude); % Assume 1 percent of the sun's light reaches your eyes - https://pubmed.ncbi.nlm.nih.gov/12537646/
+    luxValues = luxReduction*computeLux(t+hours(eastWest_hours), latitude); 
     
     %% Light Diet 1: No Time Change - Standard 
     LD1 = zeros(length(t),1);
     
-    worktime = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=9 & hour(t)<=17);
+    worktime = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=9 & hour(t)<17);
     morningLight_weekday =  (weekday(t)>1 & weekday(t)<7) & (hour(t)>=7 & hour(t)<9); % 7-9 am
-    afternoonLight_weekday = (weekday(t)>1 & weekday(t)<7) & (hour(t)>17 & hour(t)<=22); % 5-8 pm
-    weekendLight = (weekday(t)==1 | weekday(t)==7) & (hour(t)>=7 & hour(t)<=22);
+    afternoonLight_weekday = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=17 & hour(t)<22); % 5-8 pm
+    weekendLight = (weekday(t)==1 | weekday(t)==7) & (hour(t)>=7 & hour(t)<22);
     
     LD1(worktime) = 500; %lux, assumes indoors & well-lit
     LD1(morningLight_weekday) = luxValues(morningLight_weekday);
@@ -57,16 +57,16 @@ for pt = 1:size(testPoints,1)
     LD1(weekendLight) = luxValues(weekendLight);
     
     % turn lights on when it gets dark
-    eveningLight_indoors = (hour(t)>16 & hour(t)<=22) & luxValues<= 120;
+    eveningLight_indoors = (hour(t)>16 & hour(t)<22) & luxValues<= 120;
     LD1(eveningLight_indoors) = 120;
     
     %% Light Diet 2: No Time Change - Daylight Savings
     LD2 = zeros(length(t),1);
     
-    worktime = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=8 & hour(t)<=16); % work hours are 1 hour earlier with DST
+    worktime = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=8 & hour(t)<16); % work hours are 1 hour earlier with DST
     morningLight_weekday =  (weekday(t)>1 & weekday(t)<7) & (hour(t)>=6 & hour(t)<8); % % wake 1 hour earlier to prepare for work
-    afternoonLight_weekday = (weekday(t)>1 & weekday(t)<7) & (hour(t)>16 & hour(t)<=21); % 5-8 pm
-    weekendLight = (weekday(t)==1 | weekday(t)==7) & (hour(t)>=6 & hour(t)<=21);
+    afternoonLight_weekday = (weekday(t)>1 & weekday(t)<7) & (hour(t)>=16 & hour(t)<21); % 5-8 pm
+    weekendLight = (weekday(t)==1 | weekday(t)==7) & (hour(t)>=6 & hour(t)<21);
     
     LD2(worktime) = 500; %lux, assumes indoors & well-lit
     LD2(morningLight_weekday) = luxValues(morningLight_weekday);
@@ -74,7 +74,7 @@ for pt = 1:size(testPoints,1)
     LD2(weekendLight) = luxValues(weekendLight);
     
     % turn lights on when it gets dark
-    eveningLight_indoors = (hour(t)>16 & hour(t)<=21) & luxValues<= 120;
+    eveningLight_indoors = (hour(t)>16 & hour(t)<21) & luxValues<= 120;
     LD2(eveningLight_indoors) = 120;
     
     %% Light Diet 3: With both Standard Time & DST
