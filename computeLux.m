@@ -1,15 +1,11 @@
-function lux = computeLux(datetimeSeries, latitude, reflectance)
+function lux = computeLux(datetimeSeries, latitude)
 % COMPUTELUX Calculates illuminance (lux) for a given datetime series and latitude
 % datetimeSeries: Array of datetime objects
 % latitude: Latitude in degrees
-% reflectance: Ground reflectance (default is 0.2)
 
     % Constants
     S0 = 1367; % Solar constant (W/m²)
     dr = pi / 180; % Degrees to radians
-    if nargin < 3
-        reflectance = 0.2; % Default ground reflectance
-    end
 
     % Convert latitude to radians
     latRad = latitude * dr;
@@ -35,24 +31,24 @@ function lux = computeLux(datetimeSeries, latitude, reflectance)
         sinAlpha = sin(latRad) * sin(dS) + cos(latRad) * cos(dS) * cos(hs);
         alpha = asin(max(0, sinAlpha)); % Ensure non-negative altitude
 
-        % Calculate air mass ratio (M)
-        M = sqrt(1229 + (614 .* sinAlpha).^2) - 614 .* sinAlpha;
-        tau_b = 0.56 * (exp(-0.65 * M) + exp(-0.095 * M)); % Beam transmissivity
+        if alpha <= 0
+            lux(i) = 0;
+        else
+            % Calculate air mass ratio (M)
+            M = sqrt(1229 + (614 .* sinAlpha).^2) - 614 .* sinAlpha;
+            tau_b = 0.56 * (exp(-0.65 * M) + exp(-0.095 * M)); % Beam transmissivity
+    
+            % Direct beam radiation (W/m²)
+            I0 = S0 * (1 + 0.0344 * cos(2 * pi * dayOfYear / 365)); % Extraterrestrial radiation
+    
+            % Diffuse and reflected components
+            tau_d = 0.271 - 0.294 * tau_b; % Diffusion coefficient
+            
+            % Total radiation (W/m²)
+            radiation = I0*(tau_b + tau_d)*sinAlpha;   
 
-        % Direct beam radiation (W/m²)
-        I0 = S0 * (1 + 0.0344 * cos(2 * pi * dayOfYear / 365)); % Extraterrestrial radiation
-        Is = I0 * tau_b * sinAlpha; % Clear sky radiation
-
-        % Diffuse and reflected components
-        tau_d = 0.271 - 0.294 * tau_b; % Diffusion coefficient
-        tau_r = 0.271 + 0.706 * tau_b; % Reflectance coefficient
-        Id = I0 * tau_d / 2; % Diffuse radiation
-        Ir = I0 * reflectance * tau_r / 2; % Reflected radiation
-
-        % Total radiation (W/m²)
-        radiation = Is + Id + Ir;
-
-        % Convert to lux (approximation: 1 W/m² = 120 lux for daylight)
-        lux(i) = radiation * 120;
+            % Convert to lux (approximation: 1 W/m² = 120 lux for daylight)
+            lux(i) = radiation * 120;
+        end
     end
 end
