@@ -35,10 +35,8 @@ for pt = 1:size(testPoints,1)
     stateNum = testPoints(pt,7);
     countyNum = testPoints(pt,8);
 
-    % Assume that 15 degrees of latitude equals one hour, more east (negative)
-    % means sun is later (negative) relative to time - it should be brighter 
-    % earlier in the east so advance the clock 
-    eastWest_hours = testPoints(pt,3)./-15;
+    % Assume that 15 degrees of latitude equals one hour
+    eastWest_hours = testPoints(pt,3)./15;
 
     % Compute lux
     luxValues = .10 *computeLux(t+hours(eastWest_hours), latitude); 
